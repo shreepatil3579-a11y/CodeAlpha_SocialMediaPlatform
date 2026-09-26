@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>CodeAlpha Social Media</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+</head>
+
+<body>
+
+    <!-- =====================================
+         LOGIN SECTION
+    ====================================== -->
+
+    <section
+        id="loginSection"
+        class="auth-container"
+    >
+
+        <div class="auth-card">
+
+            <h1>SocialConnect</h1>
+
+            <p class="subtitle">
+                Connect with your friends
+            </p>
+
+            <h2>Login</h2>
+
+            <form id="loginForm">
+
+                <input
+                    type="email"
+                    id="loginEmail"
+                    placeholder="Email"
+                    required
+                >
+
+                <input
+                    type="password"
+                    id="loginPassword"
+                    placeholder="Password"
+                    required
+                >
+
+                <button
+                    type="submit"
+                    class="primary-btn"
+                >
+                    Login
+                </button>
+
+            </form>
+
+            <p class="switch-text">
+                Don't have an account?
+            </p>
+
+            <button
+                type="button"
+                id="showRegisterBtn"
+                class="secondary-btn"
+            >
+                Create New Account
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================
+         REGISTER SECTION
+    ====================================== -->
+
+    <section
+        id="registerSection"
+        class="auth-container"
+        style="display: none;"
+    >
+
+        <div class="auth-card">
+
+            <h1>SocialConnect</h1>
+
+            <p class="subtitle">
+                Create your account
+            </p>
+
+            <h2>Register</h2>
+
+            <form id="registerForm">
+
+                <input
+                    type="text"
+                    id="registerUsername"
+                    placeholder="Username"
+                    required
+                >
+
+                <input
+                    type="email"
+                    id="registerEmail"
+                    placeholder="Email"
+                    required
+                >
+
+                <input
+                    type="password"
+                    id="registerPassword"
+                    placeholder="Password"
+                    required
+                >
+
+                <button
+                    type="submit"
+                    class="primary-btn"
+                >
+                    Register
+                </button>
+
+            </form>
+
+            <p class="switch-text">
+                Already have an account?
+            </p>
+
+            <button
+                type="button"
+                id="showLoginBtn"
+                class="secondary-btn"
+            >
+                Back to Login
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================
+         HOME SECTION
+    ====================================== -->
+
+    <section
+        id="homeSection"
+        style="display: none;"
+    >
+
+        <!-- NAVBAR -->
+
+        <nav class="navbar">
+
+            <div class="nav-brand">
+                SocialConnect
+            </div>
+
+            <div class="nav-right">
+
+                <span id="currentUsername">
+                    User
+                </span>
+
+                <button
+                    id="logoutBtn"
+                    class="logout-btn"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </nav>
+
+
+        <!-- HOME CONTAINER -->
+
+        <main class="home-container">
+
+            <!-- CREATE POST -->
+
+            <div class="create-post-card">
+
+                <h2>
+                    Create a Post
+                </h2>
+
+                <form id="createPostForm">
+
+                    <textarea
+                        id="postContent"
+                        placeholder="What's on your mind?"
+                        rows="4"
+                        required
+                    ></textarea>
+
+                    <button
+                        type="submit"
+                        class="primary-btn"
+                    >
+                        Post
+                    </button>
+
+                </form>
+
+            </div>
+
+
+            <!-- FEED -->
+
+            <div class="feed-container">
+
+                <h2>
+                    Social Feed
+                </h2>
+
+                <div
+                    id="postsContainer"
+                >
+                    Loading posts...
+                </div>
+
+            </div>
+
+        </main>
+
+    </section>
+
+
+    <script src="app.js"></script>
+
+</body>
+
+</html>

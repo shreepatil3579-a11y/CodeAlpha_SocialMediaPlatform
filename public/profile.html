@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>User Profile - CodeAlpha Social</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar">
+
+        <div class="nav-brand">
+            CodeAlpha Social
+        </div>
+
+        <div class="nav-user">
+
+            <a href="/" class="home-link">
+                🏠 Home
+            </a>
+
+            <button id="logoutBtn">
+                Logout
+            </button>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ================= PROFILE ================= -->
+
+    <main class="profile-container">
+
+        <div class="profile-card">
+
+            <div class="profile-big-circle" id="profileInitial">
+                ?
+            </div>
+
+            <h1 id="profileUsername">
+                Loading...
+            </h1>
+
+            <p id="profileEmail">
+                Loading...
+            </p>
+
+
+            <!-- Follow Button -->
+
+            <button
+                id="followBtn"
+                class="follow-btn"
+            >
+                Follow
+            </button>
+
+
+            <!-- Stats -->
+
+            <div class="profile-stats">
+
+                <div>
+                    <strong id="followersCount">
+                        0
+                    </strong>
+
+                    <span>
+                        Followers
+                    </span>
+                </div>
+
+                <div>
+                    <strong id="followingCount">
+                        0
+                    </strong>
+
+                    <span>
+                        Following
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= USER POSTS ================= -->
+
+        <section class="profile-posts">
+
+            <h2>
+                📝 User Posts
+            </h2>
+
+            <div id="profilePosts">
+
+                <p class="loading">
+                    Loading posts...
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script>
+
+        // ===============================
+        // Get User ID
+        // ===============================
+
+        const params =
+            new URLSearchParams(
+                window.location.search
+            );
+
+        const userId =
+            params.get("id");
+
+
+        // ===============================
+        // Check Login
+        // ===============================
+
+        const token =
+            localStorage.getItem("token");
+
+        if (!token) {
+
+            window.location.href = "/";
+
+        }
+
+
+        // ===============================
+        // Elements
+        // ===============================
+
+        const profileInitial =
+            document.getElementById(
+                "profileInitial"
+            );
+
+        const profileUsername =
+            document.getElementById(
+                "profileUsername"
+            );
+
+        const profileEmail =
+            document.getElementById(
+                "profileEmail"
+            );
+
+        const followersCount =
+            document.getElementById(
+                "followersCount"
+            );
+
+        const followingCount =
+            document.getElementById(
+                "followingCount"
+            );
+
+        const followBtn =
+            document.getElementById(
+                "followBtn"
+            );
+
+        const profilePosts =
+            document.getElementById(
+                "profilePosts"
+            );
+
+
+        // ===============================
+        // Load Profile
+        // ===============================
+
+        async function loadProfile() {
+
+            if (!userId) {
+
+                profileUsername.textContent =
+                    "User not found";
+
+                return;
+
+            }
+
+            try {
+
+                const response =
+                    await fetch(
+                        `/api/users/${userId}`,
+                        {
+                            headers: {
+                                "Authorization":
+                                    `Bearer ${token}`
+                            }
+                        }
+                    );
+
+                const data =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    alert(data.message);
+
+                    return;
+
+                }
+
+
+                // User information
+
+                profileUsername.textContent =
+                    `@${data.user.username}`;
+
+                profileEmail.textContent =
+                    data.user.email;
+
+                profileInitial.textContent =
+                    data.user.username
+                        .charAt(0)
+                        .toUpperCase();
+
+
+                // Stats
+
+                followersCount.textContent =
+                    data.user.followersCount;
+
+                followingCount.textContent =
+                    data.user.followingCount;
+
+
+                // Follow button
+
+                if (data.user.isFollowing) {
+
+                    followBtn.textContent =
+                        "Unfollow";
+
+                    followBtn.classList.add(
+                        "following"
+                    );
+
+                } else {
+
+                    followBtn.textContent =
+                        "Follow";
+
+                    followBtn.classList.remove(
+                        "following"
+                    );
+
+                }
+
+
+                // User posts
+
+                displayPosts(data.posts);
+
+            } catch (error) {
+
+                console.log(error);
+
+                profileUsername.textContent =
+                    "Failed to load profile";
+
+            }
+
+        }
+
+
+        // ===============================
+        // Display Posts
+        // ===============================
+
+        function displayPosts(posts) {
+
+            profilePosts.innerHTML = "";
+
+            if (!posts || posts.length === 0) {
+
+                profilePosts.innerHTML = `
+                    <p class="no-posts">
+                        This user has no posts yet.
+                    </p>
+                `;
+
+                return;
+
+            }
+
+
+            posts.forEach(post => {
+
+                const postDiv =
+                    document.createElement("div");
+
+                postDiv.className =
+                    "profile-post";
+
+
+                const date =
+                    new Date(
+                        post.createdAt
+                    ).toLocaleString();
+
+
+                postDiv.innerHTML = `
+
+                    <div class="profile-post-header">
+
+                        <strong>
+                            @${escapeHtml(
+                                post.user.username
+                            )}
+                        </strong>
+
+                        <span>
+                            ${date}
+                        </span>
+
+                    </div>
+
+
+                    <p>
+                        ${escapeHtml(
+                            post.content
+                        )}
+                    </p>
+
+                `;
+
+
+                profilePosts.appendChild(
+                    postDiv
+                );
+
+            });
+
+        }
+
+
+        // ===============================
+        // Follow / Unfollow
+        // ===============================
+
+        followBtn.addEventListener(
+            "click",
+            async () => {
+
+                try {
+
+                    const isFollowing =
+                        followBtn.textContent ===
+                        "Unfollow";
+
+
+                    const method =
+                        isFollowing
+                            ? "DELETE"
+                            : "POST";
+
+
+                    const response =
+                        await fetch(
+                            `/api/users/${userId}/follow`,
+                            {
+                                method: method,
+
+                                headers: {
+                                    "Authorization":
+                                        `Bearer ${token}`
+                                }
+                            }
+                        );
+
+
+                    const data =
+                        await response.json();
+
+
+                    if (!response.ok) {
+
+                        alert(data.message);
+
+                        return;
+
+                    }
+
+
+                    followersCount.textContent =
+                        data.followersCount;
+
+
+                    if (isFollowing) {
+
+                        followBtn.textContent =
+                            "Follow";
+
+                        followBtn.classList.remove(
+                            "following"
+                        );
+
+                    } else {
+
+                        followBtn.textContent =
+                            "Unfollow";
+
+                        followBtn.classList.add(
+                            "following"
+                        );
+
+                    }
+
+                } catch (error) {
+
+                    alert(
+                        "Follow operation failed."
+                    );
+
+                }
+
+            }
+        );
+
+
+        // ===============================
+        // Logout
+        // ===============================
+
+        document
+            .getElementById("logoutBtn")
+            .addEventListener(
+                "click",
+                () => {
+
+                    localStorage.removeItem(
+                        "token"
+                    );
+
+                    localStorage.removeItem(
+                        "user"
+                    );
+
+                    window.location.href = "/";
+
+                }
+            );
+
+
+        // ===============================
+        // HTML Escape
+        // ===============================
+
+        function escapeHtml(text) {
+
+            const div =
+                document.createElement("div");
+
+            div.textContent = text;
+
+            return div.innerHTML;
+
+        }
+
+
+        // ===============================
+        // Start
+        // ===============================
+
+        loadProfile();
+
+    </script>
+
+</body>
+
+</html>
