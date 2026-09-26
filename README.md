@@ -2,7 +2,7 @@
 
 
 
-A mini full-stack social media platform developed as part of the CodeAlpha Full Stack Development Internship.
+A mini full-stack social media platform developed as part of the CodeAlpha Full Stack Development Internship - Task 2.
 
 
 
@@ -26,7 +26,7 @@ The project demonstrates frontend development, backend API development, authenti
 
 \- User Login \& Logout
 
-\- Secure Password Hashing
+\- Password Hashing
 
 \- JWT Authentication
 
@@ -60,6 +60,8 @@ The project demonstrates frontend development, backend API development, authenti
 
 \### Frontend
 
+
+
 \- HTML5
 
 \- CSS3
@@ -70,6 +72,8 @@ The project demonstrates frontend development, backend API development, authenti
 
 \### Backend
 
+
+
 \- Node.js
 
 \- Express.js
@@ -77,6 +81,8 @@ The project demonstrates frontend development, backend API development, authenti
 
 
 \### Database
+
+
 
 \- MongoDB
 
@@ -86,6 +92,8 @@ The project demonstrates frontend development, backend API development, authenti
 
 \### Authentication
 
+
+
 \- JSON Web Token (JWT)
 
 \- bcryptjs
@@ -93,6 +101,8 @@ The project demonstrates frontend development, backend API development, authenti
 
 
 \### Other Tools
+
+
 
 \- Git
 
@@ -111,6 +121,8 @@ The project demonstrates frontend development, backend API development, authenti
 ```text
 
 CodeAlpha\_SocialMediaPlatform/
+
+
 
 │
 
@@ -151,6 +163,10 @@ CodeAlpha\_SocialMediaPlatform/
 ├── app.js
 
 ├── package.json
+
+├── package-lock.json
+
+├── .gitignore
 
 └── README.md
 
