@@ -26,7 +26,7 @@ The project demonstrates frontend development, backend API development, authenti
 
 \- User Login \& Logout
 
-\- Password Hashing
+\- Secure Password Hashing
 
 \- JWT Authentication
 
@@ -100,7 +100,7 @@ The project demonstrates frontend development, backend API development, authenti
 
 
 
-\### Other Tools
+\### Development Tools
 
 
 
@@ -123,8 +123,6 @@ The project demonstrates frontend development, backend API development, authenti
 CodeAlpha\_SocialMediaPlatform/
 
 
-
-│
 
 ├── models/
 
